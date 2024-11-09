@@ -31,15 +31,17 @@ fetch('https://fakestoreapi.com/products')
             // This parent needs to be pre-existing element with targetable class to work  "js-products-container"
 
             
-            const addButton = productElement.querySelector('.js-add-to-cart-button');
-            addButton.addEventListener('click', ( ) => {
-             const productId = addButton.dataset.productId
+            const addButton = productElement.querySelector('.js-add-to-cart-button'); //target DOM and name addButton
+            addButton.addEventListener('click', ( ) => { //add event listener to run the code on click
+             const productId = addButton.dataset.productId // targets productId for object - set by API
 
-             let sameItem;
+
+             // below is a for loop that cycles through each item in the cart array. Attached to ELIF statement it checks if there is there is there is already that item in the cart and update its quantity by 1. Else add 1 to cart. 
+             let sameItem; 
 
              cart.forEach((item) => {
                 if (item.productId === productId) {
-                    sameItem = item;
+                    sameItem = item; 
             }});
                 if(sameItem) {
                     sameItem.quantity += 1;
@@ -47,14 +49,24 @@ fetch('https://fakestoreapi.com/products')
                 cart.push({
                     productId: productId,
                     quantity: 1
-                    });
+                    }); 
               }
+
+              let cartQuantity = 0
+
+              cart.forEach ((item) => {
+                cartQuantity += item.quantity;
+
+                document.querySelector('.js-cart-quantity')
+                .innerHTML = cartQuantity;
+                
+                console.log(cartQuantity);
+
+              });
+
+
                 console.log(cart);
              });
-             // the above is functionality for add to cart button. 
-             // we identify all buttons in the DOM via the class
-             // uses an event listener rather than a standard onclick event bc multiple buttons shared function, different property values
-             //function targets addButton.dataset.productAttribute)
         });
     })
     .catch(error => console.error('Error fetching products:', error));
