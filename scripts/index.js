@@ -1,3 +1,6 @@
+import {cart} from '/scripts/cart.js'; //import cart variable from module to avoid naming conflicts. Inside same folder so dont need ../
+
+
 fetch('https://fakestoreapi.com/products') 
 // *fetch* method, tells browser to go to API and GETs the information
 
@@ -59,7 +62,7 @@ fetch('https://fakestoreapi.com/products')
 
                 document.querySelector('.js-cart-quantity')
                 .innerHTML = cartQuantity;
-                
+
                 console.log(cartQuantity);
 
               });
