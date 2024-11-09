@@ -1,0 +1,58 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.products-title {
+  padding-top: 70px;
+  font-size: 25px;
+  font-weight: 700;
+}
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 20px;
+}
+.product {
+  border: 1px solid #ccc;;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center; 
+  cursor: pointer;
+}
+.product img {
+  width: 160px;
+  height: 160px; 
+  object-fit: cover; /* Maintain aspect ratio and cover the area */
+  border-radius: 5px; /* Optional: add rounded corners */
+}
+.product-title {
+  font-size: 1.2em;
+  font-weight: normal;
+  display: flex;
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+  height: 50px; /* Set a fixed height for the title */
+  text-align: center; /* Center text within the element */
+}
+.product-description {
+  flex-grow: 1; /* Allows the description to take up remaining space */
+  height: 100px; /* Set a fixed height for the description */
+  overflow: hidden; /* Hide overflow text */
+}
+.product-price {
+  font-weight: bold;
+  margin-top: 10px;
+}
+.button-primary {
+  width: 150px;
+  padding: 5px;
+  border: none;
+  border-radius: 30px;
+  background-color: #ffde59 ;
+  cursor: pointer;
+}

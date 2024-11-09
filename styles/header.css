@@ -1,0 +1,98 @@
+.header {
+  display: flex;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; 
+  height: 70px;
+  background-color: #210535;
+  z-index: 100; 
+  cursor: pointer;
+}
+
+
+/*left section below*/
+.left-section {
+  display: flex;
+  flex-direction: row;
+  flex: .7; 
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.brand-logo {
+  height: 100%;
+  margin-left: 5px;
+}
+.brand-name {
+  font-family: 'Neon Future 2.0 Demo';  /*downloaded font, single quotes required to use spaces*/
+  font-size: 20px;
+  width: 50%;
+}
+.brand-slogan {
+  font-size: 12px;
+  font-style: italic;
+  width: 50%;
+  padding-top: 25px;
+}
+
+/*middle section below*/
+.middle-section {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+.search-bar {
+  flex: .9;
+  height: 43px;
+  font-size: 14px;
+  padding-left: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #CCCCCC;
+  border-radius: 2px;
+  box-shadow: inset 1px 2px 3px rgba(0, 0, 0, 0.05);
+}
+.search-bar::placeholder {
+  font-size: 14px;
+}
+.search-button {
+  height: 46.5px;
+  width: 45px;
+  background-color: #ffde59;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #CCCCCC;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  margin-left: -2px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.search-icon {
+  font-size: 22px;
+}
+
+
+/*right section below*/
+.right-section {
+  display: flex;
+  flex: .5;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  padding: 30px;
+}
+.icon-text-container {
+  display: flex;
+  align-items: center;
+}
+.header-icons {
+  font-size: 25px;
+  margin-right: 5px;
+}
+.header-text {
+  font-size: 12px;
+}
