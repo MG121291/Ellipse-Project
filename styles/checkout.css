@@ -78,17 +78,37 @@
 
 .cart-item-details-grid {
   display: grid;
-  /* 100px 1fr 1fr; means the 2nd and 3rd column will
-     take up half the remaining space in the grid
-     (they will divide up the remaining space evenly). */
-  grid-template-columns: 100px 1fr 1fr;
-  column-gap: 25px;
+  grid-template-columns: 100px 1fr auto;  /* Adds a third column for delivery options */
+  gap: 25px;
+  align-items: start;
+}
+
+.cart-item-details {
+  flex: 2;  /* Take up more space on the left */
+}
+
+.delivery-options-container {
+  display: flex;
+  flex-direction: column;  /* Stack the title above the radio options */
+  align-items: flex-start;
+}
+.delivery-options-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.delivery-options {
+  flex: 1;  /* Take up less space on the right */
+  max-width: 250px;  /* Optional: Limit width */
+  margin-left: 20px; /* Add spacing between details and options */
 }
 
 @media (max-width: 1000px) {
   .cart-item-details-grid {
-    grid-template-columns: 100px 1fr;
-    row-gap: 30px;
+    flex-direction: column; /* Stack items vertically on smaller screens */
+  }
+
+  .delivery-options {
+    margin-left: 0; /* Remove left margin for mobile view */
   }
 }
 
@@ -115,6 +135,16 @@
   margin-bottom: 5px;
 }
 
+/* Apply common hyperlink styling to both links */
+.link-primary {
+  color: blue;
+  cursor: pointer;          /* Makes it look clickable */
+}
+
+.link-primary:hover {
+  color: darkblue;          /* Optional: Change color on hover */
+}
+
 .product-quantity .link-primary {
   margin-left: 3px;
 }
@@ -134,10 +164,7 @@
   }
 }
 
-.delivery-options-title {
-  font-weight: 700;
-  margin-bottom: 10px;
-}
+
 
 .delivery-option {
   display: grid;

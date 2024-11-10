@@ -10,7 +10,7 @@ body {
 }
 .products-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
 }
 .product {
@@ -25,24 +25,22 @@ body {
   cursor: pointer;
 }
 .product img {
-  width: 160px;
-  height: 160px; 
-  object-fit: cover; /* Maintain aspect ratio and cover the area */
-  border-radius: 5px; /* Optional: add rounded corners */
+  width: 130px;
+  height: 130px; 
 }
 .product-title {
   font-size: 1.2em;
   font-weight: normal;
   display: flex;
-  align-items: center; /* Center text vertically */
-  justify-content: center; /* Center text horizontally */
-  height: 50px; /* Set a fixed height for the title */
-  text-align: center; /* Center text within the element */
+  align-items: center; 
+  justify-content: center; 
+  height: 50px;
+  text-align: center; 
 }
 .product-description {
-  flex-grow: 1; /* Allows the description to take up remaining space */
-  height: 100px; /* Set a fixed height for the description */
-  overflow: hidden; /* Hide overflow text */
+  flex-grow: 1; 
+  height: 100px; 
+  overflow: hidden; 
 }
 .product-price {
   font-weight: bold;

@@ -3,8 +3,10 @@ import {cart, addToCart} from '/scripts/cart.js'; // Import cart to avoid confli
 fetch('https://fakestoreapi.com/products') // Fetch products from API.
     .then(apiData => apiData.json()) // Parse response to JSON.
     .then(productsArray => { 
-        localStorage.setItem('products', JSON.stringify(productsArray)); // Save copy of products to localStorage for cart transfer
-        
+        localStorage.setItem('products', JSON.stringify(productsArray)); 
+        // Save copy of products to localStorage for cart transfer
+        // Data is retrieved in checkout.js to display products in the cart.
+
         const productsContainer = document.querySelector('.js-products-container'); // Targets product container/grid.
         productsArray.forEach(productObject => {  // Loop through products.
             const productElement = document.createElement('div'); // creates divs
@@ -13,7 +15,7 @@ fetch('https://fakestoreapi.com/products') // Fetch products from API.
             productElement.innerHTML = `
                 <img src="${productObject.image}">
                 <p class="product-title">${productObject.title}</p>
-                <p class="product-price">Price: £${productObject.price}</p>
+                <p class="product-price">Price: £${(productObject.price).toFixed(2)}</p>
                 <button class="js-add-to-cart-button button-primary" data-product-id="${productObject.id}">
                     Add to Cart
                 </button>
@@ -34,8 +36,10 @@ fetch('https://fakestoreapi.com/products') // Fetch products from API.
             addButton.addEventListener('click', () => { // When clicked does following:
                 const productId = addButton.dataset.productId; // gets product ID
                 addToCart(productId); // runs function from cart.js 
-                localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to localStorage.
-                updateCartQuantity(); // Runs function to updatecart quantity + display
+                localStorage.setItem('cart', JSON.stringify(cart)); 
+                // Save cart to localStorage.
+                // Data is used in checkout.js to display cart details and summary.
+                updateCartQuantity(); // Runs function to update cart quantity + display
             });
         });
     })

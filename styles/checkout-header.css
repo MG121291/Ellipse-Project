@@ -1,17 +1,13 @@
 .checkout-header {
-  height: 60px;
-  padding-left: 30px;
-  padding-right: 30px;
-  background-color: black;
-
   display: flex;
-  justify-content: center;
-
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  z-index: 1000;
+  right: 0; 
+  height: 70px;
+  background-color: #210535;
+  z-index: 100; 
+  cursor: pointer;
 }
 
 .header-content {
