@@ -1,0 +1,78 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.users-title {
+  padding-top: 70px;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.js-users-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr ;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.user {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  margin: 20px 30px 0 30px;
+}
+
+.user img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.user-name,
+.user-phone,
+.user-email,
+.user-password,
+.user-address-title,
+.user-address-body p {
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.user-phone,
+.user-email,
+.user-password {
+  color: #555555;
+}
+
+.user-address-title {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.user-address-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-address-body p {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}

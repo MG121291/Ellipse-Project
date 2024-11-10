@@ -10,7 +10,7 @@ console.log("Products from localStorage:", products);
 
 // If the cart is empty, display a "No items in your cart" message
 if (cart.length === 0) {
-  document.querySelector('.js-order-summary').innerHTML = '<p>No items in your cart...yet</p>';
+  document.querySelector('.js-order-summary').innerHTML = '<p>Houston, we have a problem...the cargo hold is empty.</p>';
 } else {
   let cartSummaryHTML = ''; // Initialize the variable to hold the HTML for the cart summary
 

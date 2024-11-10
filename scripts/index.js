@@ -1,3 +1,6 @@
+/*This page fetches the API and renders the products on the index.html page*/ 
+
+
 import {cart, addToCart} from '/scripts/cart.js'; // Import cart to avoid conflicts.
 
 fetch('https://fakestoreapi.com/products') // Fetch products from API.
@@ -7,16 +10,16 @@ fetch('https://fakestoreapi.com/products') // Fetch products from API.
         // Save copy of products to localStorage for cart transfer
         // Data is retrieved in checkout.js to display products in the cart.
 
-        const productsContainer = document.querySelector('.js-products-container'); // Targets product container/grid.
+        const productsContainer = document.querySelector('.js-products-container'); // Targets product container/grid/parent.
         productsArray.forEach(productObject => {  // Loop through products.
-            const productElement = document.createElement('div'); // creates divs
+            const productElement = document.createElement('div'); // creates div for each
             productElement.classList.add('product'); // Add css class to divs
 
             productElement.innerHTML = `
                 <img src="${productObject.image}">
                 <p class="product-title">${productObject.title}</p>
                 <p class="product-price">Price: £${(productObject.price).toFixed(2)}</p>
-                <button class="js-add-to-cart-button button-primary" data-product-id="${productObject.id}">
+                <button class="js-add-to-cart-button add-to-cart-button" data-product-id="${productObject.id}">
                     Add to Cart
                 </button>
             `; // Add HTML content for each product.
