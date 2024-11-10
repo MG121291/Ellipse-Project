@@ -43,6 +43,8 @@ if (cart.length === 0) {
     }
   });
 
+  
+
   // Insert the generated cart summary HTML into the page
   document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 
@@ -67,7 +69,7 @@ function updateCartDisplay() {
 
   // Re-render the cart summary
   if (cart.length === 0) {
-    document.querySelector('.js-order-summary').innerHTML = '<p>No items in your cart...yet</p>';
+    document.querySelector('.js-order-summary').innerHTML = '<p>Houston, we have a problem...the cargo hold is empty.</p>';
   } else {
     let cartSummaryHTML = '';
     cart.forEach((cartItem) => {
@@ -93,7 +95,29 @@ function updateCartDisplay() {
         `;
       }
     });
-    document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+    document.querySelector('.js-order-summary').
+        innerHTML = cartSummaryHTML; 
+
+        // Select the js-payment-summary container and set its HTML content
+  document.querySelector('.js-payment-summary').innerHTML = `
+<div class="payment-summary">
+  <div class="payment-summary-title">
+    Order Summary
+  </div>
+  <div class="payment-summary-row">
+    <div>Items (x):</div>
+    <div class="payment-summary-money">£0.00</div>
+  </div>
+  <div class="payment-summary-row total-row">
+    <div>Order total:</div>
+    <div class="payment-summary-money">£0.00</div>
+  </div>
+  <button class="place-order-button button-primary">
+    Submit order
+  </button>
+</div>
+`;
+
   }
 
   // Reattach event listeners for delete buttons

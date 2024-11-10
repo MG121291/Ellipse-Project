@@ -1,9 +1,8 @@
-export let cart = []; // Initialize an empty array for the shopping cart
+export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 export function addToCart(productId) {
-  // Ensure productId is a number
-  productId = Number(productId); // Convert to number
-  
+  productId = Number(productId);  // Convert to number
+
   let sameItem;
 
   cart.forEach((cartItem) => {
@@ -19,9 +18,11 @@ export function addToCart(productId) {
       productId: productId,  // Store productId as a number
       quantity: 1
     });
+    saveToStorage();
   }
+}
 
-  // Optionally, save the updated cart to localStorage
+function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
@@ -37,18 +38,19 @@ export function waitForCartToLoad() {
     if (cartIcon) {
       cartIcon.addEventListener("click", goToCheckout);
     }
+    // Add event listener for the submit order button
+    const submitOrderButton = document.querySelector('.js-submit-order-button');
+    if (submitOrderButton) {
+      submitOrderButton.addEventListener('click', submitOrder);  // Attach the event listener to the button
+    }
   });
 }
 
-// Adjusting the removeFromCart function to handle string ID comparison
+// Adjusted the removeFromCart function to handle string ID comparison
 export function removeFromCart(productId) {
-  // Fetch the cart from localStorage
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  // Log the cart to debug
   console.log("Cart before removal:", cart);
-
-  // Log the types of productId and item.productId to debug
   console.log("Removing product ID:", productId, "Type:", typeof productId);
 
   const updatedCart = cart.filter(item => {
@@ -56,23 +58,20 @@ export function removeFromCart(productId) {
     return item.productId !== parseInt(productId);  // Compare as integers
   });
 
-  // Log the updated cart
   console.log("Updated Cart after removal:", updatedCart);
 
-  // If no change in cart, log that too
   if (updatedCart.length === cart.length) {
     console.log(`No changes: Product ID ${productId} was not found.`);
   }
 
-  // Update the localStorage with the new cart
   localStorage.setItem('cart', JSON.stringify(updatedCart));
 
-  return updatedCart;  // Returning updated cart
+  return updatedCart;  // Return updated cart
 }
 
-
-
-
-
+// The submitOrder function for when the submit button is clicked
+function submitOrder() {
+  alert('Order Submitted!');  // Placeholder for the submit order functionality
+}
 
 waitForCartToLoad();

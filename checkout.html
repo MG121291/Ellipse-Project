@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Checkout</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout</title>
 
     <!-- Load a font called Roboto from Google Fonts. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,108 +17,94 @@
     <link rel="stylesheet" href="styles/checkout.css">
   </head>
   <body>
-   <!-- Start of header-->
-   <header class="header">
-    <div class="left-section">
-      <img class="brand-logo" src="logo/Ellipse.2.jpg">
-      <span class="brand-name">e l l i p s e</span>
-      <span class="brand-slogan">We revolve around you</span>
-    </div>
-
-    <div class="middle-section">
-      <input class="search-bar js-search-bar" type="text" placeholder="Search">
-      <button class="search-button">
-        <span class="search-icon">
-          <i class="bi bi-search"></i>
-        </span>
-      </button>
-    </div>
-
-    <div class="right-section">
-      <a href="account.html">
-        <div class="icon-text-container">
-          <span class="header-icons">
-            <i class="bi bi-person-fill"></i>
-          </span>
-          <span class="header-text">
-            Account
-          </span>
+    <!-- Start of header-->
+    <header class="header">
+      <div class="left-section">
+        <img class="brand-logo" src="logo/Ellipse.2.jpg" alt="Brand logo">
+        <span class="brand-name">e l l i p s e</span>
+        <span class="brand-slogan">We revolve around you</span>
       </div>
-      </a>
-     
-      <a href="index.html">
-        <div class="icon-text-container">
-          <span class="header-icons">
-            <i class="bi bi-truck"></i>
+
+      <div class="middle-section">
+        <input class="search-bar js-search-bar" type="text" placeholder="Search">
+        <button class="search-button">
+          <span class="search-icon">
+            <i class="bi bi-search"></i>
           </span>
-          <span class="header-text">
-             Orders
+        </button>
+      </div>
+
+      <div class="right-section">
+        <a href="account.html">
+          <div class="icon-text-container">
+            <span class="header-icons">
+              <i class="bi bi-person-fill"></i>
+            </span>
+            <span class="header-text">
+              Account
             </span>
           </div>
-      </a>
+        </a>
 
-  
+        <a href="index.html">
+          <div class="icon-text-container">
+            <span class="header-icons">
+              <i class="bi bi-truck"></i>
+            </span>
+            <span class="header-text">
+              Orders
+            </span>
+          </div>
+        </a>
 
-    <a href="checkout.html" id="cartIcon">
-      <div class="icon-text-container">
-        <span class="header-icons">
-          <div class="cart-quantity js-cart-quantity">0</div>
-          <i class="bi bi-cart"></i>
-        </span>
-        <span class="header-text">
-         Cart
-        </span>
+        <a href="checkout.html" id="cartIcon">
+          <div class="icon-text-container">
+            <span class="header-icons">
+              <div class="cart-quantity js-cart-quantity">0</div>
+              <i class="bi bi-cart"></i>
+            </span>
+            <span class="header-text">
+              Cart
+            </span>
+          </div>
+        </a>
       </div>
-    </a>
-    
-    </div>
-  </header>
+    </header>
 
-  <!--Start of main body-->
-
+    <!-- Start of main body-->
     <div class="main">
       <div class="page-title">Review your order</div>
 
       <div class="checkout-grid">
         <div class="order-summary js-order-summary">
+          <!-- Cart items will be injected here via JavaScript -->
         </div>
 
-        <div class="payment-summary">
+        <div class="payment-summary js-payment-summary">
           <div class="payment-summary-title">
             Order Summary
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
-            <div class="payment-summary-money">$42.75</div>
+            <div>Items (x):</div>
+            <div class="payment-summary-money"></div>
           </div>
-
-          <div class="payment-summary-row">
-            <div>Shipping &amp; handling:</div>
-            <div class="payment-summary-money">$4.99</div>
-          </div>
-
-          <div class="payment-summary-row subtotal-row">
-            <div>Total before tax:</div>
-            <div class="payment-summary-money">$47.74</div>
-          </div>
-
-          <div class="payment-summary-row">
-            <div>Estimated tax (10%):</div>
-            <div class="payment-summary-money">$4.77</div>
-          </div>
-
+          
           <div class="payment-summary-row total-row">
             <div>Order total:</div>
-            <div class="payment-summary-money">$52.51</div>
+            <div class="payment-summary-money"></div>
           </div>
 
-          <button class="place-order-button button-primary">
-            Place your order
+          <!-- Submit Order Button -->
+          <button class="submit-order-button js-submit-order-button">
+            Submit order
           </button>
         </div>
       </div>
     </div>
+
+    <!-- Add the scripts at the end for improved loading -->
+    <script src="scripts/cart.js"></script>
     <script type="module" src="scripts/checkout.js"></script>
   </body>
 </html>
