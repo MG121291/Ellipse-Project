@@ -149,6 +149,16 @@
   margin-left: 3px;
 }
 
+
+ .minus-1-quantity,
+ .add-1-quantity  {
+  font-size: 18px;
+  padding: 2px;
+  background-color: transparent;
+  border: none;
+}
+
+
 @media (max-width: 1000px) {
   .delivery-options {
     /* grid-column: 1 means this element will be placed

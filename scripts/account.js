@@ -30,3 +30,5 @@ function getUsers() {
 }
 
 getUsers();
+
+//<---------------Same functionality as index.js---------------> //

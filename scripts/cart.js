@@ -63,10 +63,6 @@ export function getFromStorage() {
 
 
 
-
-
-
-
 // --------------------------- declare goToCheckout function ----------------------------------- //
 export function goToCheckout(event) {
   event.preventDefault();  
@@ -155,7 +151,7 @@ Come back with supplies.`);
 // <----------- the .map() method makes a duplicate, more condensed version of the local cart. Containing only properties that the API can read. Think of you scanning your physcial basket through a self service checkout.  ---------------> 
 
 // <------------- We the make POST request to API to create a new cart ---------------> //
-// <------------- Submits the cart as an order to the API, and clears the cart after success ---------------> //
+// <--------- We get a response from the API documented for now in console logs, will update to order confirmation page ------------> //
 
 
 
@@ -166,8 +162,8 @@ Come back with supplies.`);
 
 
 
-// --------------------------- declare removeFromCart function ----------------------------------- //
-export function removeFromCart(productId) {
+// --------------------------- declare deleteFromCart function ----------------------------------- //
+export function deleteFromCart(productId) {
   let cart = getFromStorage () || [];  
   const updatedCart = cart.filter(item => {
     return item.productId !== Number(productId);  

@@ -1,8 +1,10 @@
-import { removeFromCart } from "./cart.js";
+import { deleteFromCart} from "./cart.js"; 
+
 
 // Load the cart and products from localStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let products = JSON.parse(localStorage.getItem('products')) || [];
+
 
 // If the cart is empty, display a "No items in your cart" message
 if (cart.length === 0) {
@@ -40,8 +42,8 @@ function updateCartDisplay() {
                 <div class="product-price">£${(matchingProduct.price).toFixed(2)}</div>
                 <div class="product-quantity">
                   Quantity: <span class="quantity-label">${cartItem.quantity}</span>
-                  <span class="minus-1-quantity-link link-primary">-</span>
-                  <span class="add-1-quantity-link link-primary">+</span>
+                  <button class="minus-1-quantity link-primary">-</button>
+                  <button class="add-1-quantity link-primary">+</button>
                   <p class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">Delete</p>
                 </div>
               </div>
@@ -58,7 +60,7 @@ function updateCartDisplay() {
     document.querySelectorAll('.js-delete-link').forEach((link) => {
       link.addEventListener('click', (event) => {
         const productId = event.target.dataset.productId;
-        removeFromCart(productId);  // Call removeFromCart with the productId
+        deleteFromCart(productId);  // Call deleteFromCart with the productId
         updateCartDisplay();  // Update the cart display after removal
         generatePaymentSummary();  // Update payment summary after cart change
       });
