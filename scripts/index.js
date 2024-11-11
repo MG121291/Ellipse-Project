@@ -1,39 +1,42 @@
-/* This page fetches the API and renders the products on the index.html page */
+import { cart, addToCart, saveToStorage } from '/scripts/cart.js'; 
+// <------- importing functions to keep files modular --------> //
 
-import { cart, addToCart } from '/scripts/cart.js'; // Import cart to avoid conflicts.
 
-let products = JSON.parse(localStorage.getItem('products')) || []; // Check if products exist in localStorage.
+
+
+// -------------------------on initialize---------------------------------------//
+let products = JSON.parse(localStorage.getItem('products')) || []; 
 
 if (products.length === 0) {
-  // If no products in localStorage, fetch them from the API.
-  fetch('https://fakestoreapi.com/products') // Fetch products from API.
-    .then(apiData => apiData.json()) // Parse response to JSON.
+  fetch('https://fakestoreapi.com/products') 
+    .then(apiData => apiData.json()) 
     .then(productsArray => {
-      // Store products in localStorage for future use.
       localStorage.setItem('products', JSON.stringify(productsArray));
       products = productsArray;
-      console.log('Products loaded from API:', products);
+    });
+} 
+  displayProductsFromAPI(products);
 
-      // Proceed with your code to render products on the page.
-      renderProducts(products);
-    })
-    .catch(error => console.error('Error fetching products:', error));
-} else {
-  // If products are already in localStorage, use them directly.
-  console.log('Products loaded from localStorage:', products);
+// <------------- check if profucts exist in local storage OR use empty array ---------------> //
+// <----------- if products array is empty then fetch products from API -------------------> //
+// <------ parse string response to JSON productsArray, assign to products variable ----> //
+// <----------run function to display the contents of products on screen ----------------> //
 
-  // Proceed with your code to render products on the page.
-  renderProducts(products);
-}
 
-// Function to render the products
-function renderProducts(productsArray) {
-  const productsContainer = document.querySelector('.js-products-container'); // Targets product container/grid/parent.
 
-  productsArray.forEach(productObject => {
-    const productElement = document.createElement('div'); // Creates div for each product.
-    productElement.classList.add('product'); // Add css class to divs.
 
+
+
+
+
+
+// <--------------------------- declare displayProducts function -----------------------------------> //
+function displayProductsFromAPI() {
+  const productsContainer = document.querySelector('.js-products-container');
+  
+  products.forEach(productObject => {
+    const productElement = document.createElement('div');
+    productElement.classList.add('product');
     productElement.innerHTML = `
       <img src="${productObject.image}" alt="${productObject.title}">
       <p class="product-title">${productObject.title}</p>
@@ -41,27 +44,62 @@ function renderProducts(productsArray) {
       <button class="js-add-to-cart-button add-to-cart-button" data-product-id="${productObject.id}">
         Add to Cart
       </button>
-    `; // Add HTML content for each product.
+    `;
+    productsContainer.appendChild(productElement);
 
-    productsContainer.appendChild(productElement); // Renders HTML into parent.
-
-    // Function to update cart quantity on the page.
-    function updateCartQuantity() {
-      let cartQuantity = 0;
-      cart.forEach((cartItem) => {
-        cartQuantity += cartItem.quantity;
-        document.querySelector('.js-cart-quantity')
-          .innerHTML = cartQuantity;
-      });
-    }
-
-    // Add event listener to the add-to-cart button.
     const addButton = productElement.querySelector('.js-add-to-cart-button');
-    addButton.addEventListener('click', () => {
-      const productId = addButton.dataset.productId; // Gets product ID.
-      addToCart(productId); // Runs function from cart.js to add to cart.
-      localStorage.setItem('cart', JSON.stringify(cart)); // Save updated cart to localStorage.
-      updateCartQuantity(); // Updates cart quantity on the page.
-    });
+    addButtonListener(addButton, productObject.id);
   });
 }
+
+// <--------------------- Target js-products-container HTML element and assign to variable  ---------------------> //
+// <---------- For Loop through PRODUCTS array. Creates a div for each object. Assigned to variable ----------> //
+// <------------- Div variabe targeted in DOM to generates additional html with Object properties ------------> //
+// <-------------- Div variable and its content pushed to the parent Container via .appendChild --------------> //
+// <------------------- Target generated js-add-to-cart-button save as addButton variable  -------------------> //
+// <------- Runs the addButtonListener function, targets individual AddButtons via productObject.id -------> //
+
+
+
+
+
+
+
+
+
+// --------------------------- declare AddButtonListener function -----------------------------------//
+function addButtonListener(button, productId) {
+  button.addEventListener('click', () => {
+    addToCart(productId); // imported from cart.js
+    saveToStorage(); // imported from cart.js
+    updateCartQuantity(); // Update cart quantity on the page
+  });
+}
+// <------ uses button parameter, targets <button> elements in the DOM directly ------> //
+// <----------- uses productID parameter, passed in from addToCart function ----------> //
+// <------- target buttons on DOM, adds event listener for a click on a button --------> //
+// <------ when button clicked runs addToCart + parameter, SaveToStorage and updateCartQuantity functions ------> //
+
+
+
+
+
+
+
+
+
+// --------------------------- declare update cart function -----------------------------------//
+function updateCartQuantity() {
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => { //cart array imported from cart.js
+    cartQuantity += cartItem.quantity;
+    document.querySelector('.js-cart-quantity')
+      .innerHTML = cartQuantity;
+  });
+}
+
+// <------- sets default cart quantity as 0 --------> //
+// <------- For loops through the items in cart array --------> //
+// <------- For loops through each item in cart array and checks how many of that item there is--------> //
+// <--------- Adds the total number of each item together and adds to cartQantity variable -----------> //
+// <------- targets DOM for js-cart-quantity and updates content to dispay total cartQuantity--------> //

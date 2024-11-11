@@ -28,7 +28,7 @@ function getCart() {
 
 // Function to update the cart data and refresh the displayed cart
 function updateCart() {
-  // Send PATCH request to update the cart data
+  // Send PATCH request to update the existing cart data
   fetch('https://fakestoreapi.com/carts/1', {
     method: "PATCH",
     headers: {
@@ -65,6 +65,9 @@ function updateCart() {
       console.error("Error updating cart data:", error);
     });
 }
+
+function newCart() {
+  };
 
 // Initial fetch of the cart data when the page loads
 getCart();

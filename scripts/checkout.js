@@ -4,10 +4,6 @@ import { removeFromCart } from "./cart.js";
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let products = JSON.parse(localStorage.getItem('products')) || [];
 
-// Log the cart to verify it's correctly loaded
-console.log("Cart from localStorage:", cart);
-console.log("Products from localStorage:", products);
-
 // If the cart is empty, display a "No items in your cart" message
 if (cart.length === 0) {
   document.querySelector('.js-order-summary').innerHTML = '<p>Houston, we have a problem...the cargo hold is empty.</p>';
