@@ -1,3 +1,6 @@
+
+/*
+
 function searchBar () {  
   const searchBar = document.querySelector('.js-search-bar'); // targets search bar input
  
@@ -7,7 +10,7 @@ function searchBar () {
  }
  
  
- /*
+
  
  
  

@@ -107,29 +107,8 @@ export function waitForCartToLoad() {
 
 
 
-// --------------------------- declare removeFromCart function ----------------------------------- //
-export function removeFromCart(productId) {
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];  // Retrieve and parse the cart data from localStorage
 
-  console.log("Cart before removal:", cart);
-  console.log("Removing product ID:", productId, "Type:", typeof productId);
 
-  const updatedCart = cart.filter(item => {
-    console.log("Comparing with cart item productId:", item.productId, "Type:", typeof item.productId);
-    return item.productId !== parseInt(productId);  // Compare product IDs as integers to find and remove the item
-  });
-
-  console.log("Updated Cart after removal:", updatedCart);
-
-  if (updatedCart.length === cart.length) {
-    console.log(`No changes: Product ID ${productId} was not found.`);  // If no item was removed
-  }
-
-  localStorage.setItem('cart', JSON.stringify(updatedCart));  // Save the updated cart to localStorage
-
-  return updatedCart;  // Return the updated cart after removal
-}
-// <------------- Removes a product from the cart by comparing productId and updates localStorage ---------------> //
 
 
 
@@ -137,50 +116,67 @@ export function removeFromCart(productId) {
 
 // --------------------------- declare submitOrder function ----------------------------------- //
 function submitOrder() {
-  // Fetch the cart from localStorage
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  // Check if the cart is empty
+  const cart = getFromStorage () || [];
+
   if (cart.length === 0) {
-    alert('Your cart is empty. Please add items to your cart before submitting the order.');
+    alert(`It's dangerous to go alone! 
+
+Come back with supplies.`);
     return;
   }
-
-  // Prepare the products in the cart to be posted to the API
   const productsInCart = cart.map(cartItem => ({
     productId: cartItem.productId,
-    quantity: cartItem.quantity // Use the actual quantity from the cart
+    quantity: cartItem.quantity 
   }));
-
-  // Prepare the order data
-  const orderData = {
-    userId: 8,  // Assuming a static user ID for the sake of this example
-    date: new Date().toISOString().split('T')[0],  // Use the current date in ISO format
-    products: productsInCart
-  };
-
   // Post the order data to the API
   fetch('https://fakestoreapi.com/carts', {
     method: "POST",
-    body: JSON.stringify(orderData),
+    body: JSON.stringify(
+      {
+        userId: 8, 
+        date: new Date().toISOString(), //reformats date+time to YYYY-MM-DDT00:00:00
+        products: productsInCart
+      }
+    ),
     headers: {
-      'Content-Type': 'application/json'  // Ensure the request body is in JSON format
+      'Content-Type': 'application/json' // send string data with a tag to tell API to parse to JSON
     }
   })
     .then(response => response.json())
     .then(json => {
       console.log('Order submitted successfully:', json);
       alert('Order submitted successfully!');
-      // Optionally clear the cart after successful submission
+  
       localStorage.removeItem('cart');
     })
-    .catch(error => {
-      console.error('Error submitting order:', error);
-      alert('There was an error submitting the order.');
-    });
 }
+// <---------------- If the cart is empty then alert with pop up and do not run any code -----------------> //
+// <----------- the .map() method makes a duplicate, more condensed version of the local cart. Containing only properties that the API can read. Think of you scanning your physcial basket through a self service checkout.  ---------------> 
+
+// <------------- We the make POST request to API to create a new cart ---------------> //
 // <------------- Submits the cart as an order to the API, and clears the cart after success ---------------> //
 
+
+
+
+
+
+
+
+
+
+// --------------------------- declare removeFromCart function ----------------------------------- //
+export function removeFromCart(productId) {
+  let cart = getFromStorage () || [];  
+  const updatedCart = cart.filter(item => {
+    return item.productId !== Number(productId);  
+  });
+  localStorage.setItem('cart', JSON.stringify(updatedCart));  
+}
+// <------------- Removes a product from the cart by comparing productId ---------------> //
+// <------- uses .filter method to make a new list/ of items don't match the productId trying to move ---------> //
+// <------------ stores thew new list (updatedCart) of items to local storage  ---------> //
 
 
 waitForCartToLoad();  // Wait for cart to load and set up event listeners when the DOM is ready

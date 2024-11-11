@@ -40,8 +40,9 @@ function updateCartDisplay() {
                 <div class="product-price">£${(matchingProduct.price).toFixed(2)}</div>
                 <div class="product-quantity">
                   Quantity: <span class="quantity-label">${cartItem.quantity}</span>
-                  <span class="update-quantity-link link-primary">Update</span>
-                  <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">Delete</span>
+                  <span class="minus-1-quantity-link link-primary">-</span>
+                  <span class="add-1-quantity-link link-primary">+</span>
+                  <p class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">Delete</p>
                 </div>
               </div>
             </div>
