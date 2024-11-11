@@ -21,10 +21,10 @@ export function addToCart(productId) {
     sameItem.quantity += 1;
   } else {  
     cart.push({
-      productId: productId,  // Store productId as a number
+      productId: productId,  
       quantity: 1
     });
-    saveToStorage();  // 
+    saveToStorage(); 
   }
 }
 // <------------- Converts product Id to a number ---------------> //
@@ -32,8 +32,13 @@ export function addToCart(productId) {
 // <------------- For loops through CART ARRAY to check if item exists in cart. Compares productIds ---------------> //
 // <------------- If yes then we reassign the value of sameItem variable to be the same as the cartItem  ---------------> //
 // <-------------  If the item is already in the CART ARRAY, increase quantity by 1---------------> //
-// <------------- If the item is not found in the CART ARRAY, add it to the cart by way of pushing to the array---------------> //
+// <---------- If the item is not found in the CART ARRAY, add it to the cart by way of pushing to the array ------------> //
 // <------------- Save updated cart to local storage to be retrieved on checkout page---------------> //
+
+
+
+
+
 
 
 
@@ -41,19 +46,22 @@ export function addToCart(productId) {
 
 // --------------------------- declare saveToStorage function ----------------------------------- //
 export function saveToStorage() {
-  localStorage.setItem('cart', JSON.stringify(cart));  // Save cart array to localStorage as a string
+  localStorage.setItem('cart', JSON.stringify(cart));  
 }
-// <------------- Saves cart data to localStorage to persist cart state across pages ---------------> //
-
+// <------------- Saves cart data to localStorage as a string to hold cart content across pages ---------------> //
 
 
 
 
 // --------------------------- declare getFromStorage function ----------------------------------- //
 export function getFromStorage() {
-  return JSON.parse(localStorage.getItem('cart'));  // Retrieves cart from localStorage and parses it into JSON
+  return JSON.parse(localStorage.getItem('cart'));  
 }
-// <------------- Retrieves and parses the cart data from localStorage ---------------> //
+// <----------- Retrieves cart from localStorage as a string and parses it into JSON ---------------> //
+
+
+
+
 
 
 
@@ -61,11 +69,16 @@ export function getFromStorage() {
 
 // --------------------------- declare goToCheckout function ----------------------------------- //
 export function goToCheckout(event) {
-  event.preventDefault();  // Prevent default form submission behavior
-  localStorage.setItem('cart', JSON.stringify(cart));  // Save cart to localStorage
-  window.location.href = 'checkout.html';  // Redirect to checkout page
+  event.preventDefault();  
+  saveToStorage();
+  window.location.href = 'checkout.html'; 
 }
-// <------------- Saves the cart to localStorage and navigates to checkout page ---------------> //
+// <------------ RED LIGHT- event.preventDefault();  halts immediate navigation to checkout.html --------------> //
+// <------------ AMBER LIGHT - this lets us save our cart to local storage before following href ---------------> //
+// <------------- GREEN LIGHT - window.location.href  tell us its ok to go to destination  ---------------> //
+
+
+
 
 
 
@@ -73,19 +86,22 @@ export function goToCheckout(event) {
 
 // --------------------------- declare waitForCartToLoad function ----------------------------------- //
 export function waitForCartToLoad() {
-  document.addEventListener("DOMContentLoaded", () => {  // Wait for the DOM to load
-    const cartIcon = document.getElementById("cartIcon");  // Get cart icon element
+  document.addEventListener("DOMContentLoaded", () => { 
+    const cartIcon = document.getElementById("cartIcon");  
     if (cartIcon) {
-      cartIcon.addEventListener("click", goToCheckout);  // Add event listener to cart icon to go to checkout page
+      cartIcon.addEventListener('click', goToCheckout);  
     }
-    // Add event listener for the submit order button
-    const submitOrderButton = document.querySelector('.js-submit-order-button');  // Get submit order button
+    
+    const submitOrderButton = document.querySelector('.js-submit-order-button');  
     if (submitOrderButton) {
-      submitOrderButton.addEventListener('click', submitOrder);  // Attach submitOrder function to button
+      submitOrderButton.addEventListener('click', submitOrder);  
     }
   });
 }
-// <------------- Waits for the DOM to load, then attaches event listeners to cart icon and submit button ---------------> //
+// <------ Adds event listener to wait for  DOM to load because generating so much html on checkout page -------> //
+// <--------- similar to queryselector we get "carticon""html by ID and assign as value to cartIcon variable------- ---> //
+// <--------- then if if statement we check to see if cartIcon has loaded, if true then add event listener for click and run goToCheckout function. We run the exact same logic for the submitOrder button------- ---> //
+//
 
 
 
