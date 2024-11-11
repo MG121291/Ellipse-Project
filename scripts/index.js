@@ -57,7 +57,7 @@ function displayProductsFromAPI() {
 // <------------- Div variabe targeted in DOM to generates additional html with Object properties ------------> //
 // <-------------- Div variable and its content pushed to the parent Container via .appendChild --------------> //
 // <------------------- Target generated js-add-to-cart-button save as addButton variable  -------------------> //
-// <------- Runs the addButtonListener function, targets individual AddButtons via productObject.id -------> //
+// <------- Runs the addButtonListener function, targets individual AddButtons via productObject.id (addedProductId) -------> //
 
 
 
@@ -68,9 +68,9 @@ function displayProductsFromAPI() {
 
 
 // --------------------------- declare AddButtonListener function -----------------------------------//
-function addButtonListener(button, productId) {
+function addButtonListener(button, addedProductId) {
   button.addEventListener('click', () => {
-    addToCart(productId); // imported from cart.js
+    addToCart(addedProductId); // imported from cart.js
     saveToStorage(); // imported from cart.js
     updateCartQuantity(); // Update cart quantity on the page
   });
