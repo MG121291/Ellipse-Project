@@ -1,6 +1,6 @@
 import { removeFromCart } from "./cart.js";
 
-// Load the cart from localStorage
+// Load the cart and products from localStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let products = JSON.parse(localStorage.getItem('products')) || [];
 
@@ -16,7 +16,7 @@ if (cart.length === 0) {
 
   // Loop through each item in the cart and generate the HTML for each
   cart.forEach((cartItem) => {
-    const productId = cartItem.productId; // Get the product ID from the cart item
+    const productId = cartItem.productId;
     const matchingProduct = products.find(product => String(product.id) === String(productId));
 
     if (matchingProduct) {
@@ -43,17 +43,47 @@ if (cart.length === 0) {
     }
   });
 
-  
-
   // Insert the generated cart summary HTML into the page
   document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 
-  // Attach event listeners to each delete link
+  // Function to generate the payment summary
+function generatePaymentSummary() {
+  // Calculate the total quantity of items in the cart
+  const totalQuantity = cart.reduce((total, cartItem) => total + cartItem.quantity, 0);
+
+  const totalAmount = cart.reduce((total, cartItem) => {
+    const matchingProduct = products.find(product => String(product.id) === String(cartItem.productId));
+    return matchingProduct ? total + matchingProduct.price * cartItem.quantity : total;
+  }, 0);
+
+  const paymentSummaryHTML = `
+    <div class="payment-summary-title">
+      Order Summary
+    </div>
+    <div class="payment-summary-row">
+      <div>Items (${totalQuantity}):</div>
+      <div class="payment-summary-money">£${totalAmount.toFixed(2)}</div>
+    </div>
+    <div class="payment-summary-row total-row">
+      <div>Order total:</div>
+      <div class="payment-summary-money">£${totalAmount.toFixed(2)}</div>
+    </div>
+      <button class="submit-order-button button-primary js-submit-order-button">
+      Submit order
+    </button>
+  
+  `;
+  
+  document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
+}
+
+
+  generatePaymentSummary();
+
+  // Reattach event listeners for delete buttons
   document.querySelectorAll('.js-delete-link').forEach((link) => {
-    console.log("Attach delete listener for Product ID:", link.dataset.productId);  // Log each product ID to check event binding
     link.addEventListener('click', (event) => {
       const productIdLink = event.target.dataset.productId;
-      console.log("Clicked Delete on Product ID:", productIdLink);  // Debugging: Log the product ID being clicked
       removeFromCart(productIdLink);  // Call removeFromCart with the productIdLink
       updateCartDisplay();  // Update the cart display after removal
     });
@@ -64,7 +94,7 @@ if (cart.length === 0) {
 function updateCartDisplay() {
   // Re-fetch the cart from localStorage after removal and re-render
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
+  
   console.log("Updated cart after deletion:", cart);  // Log the updated cart for debugging
 
   // Re-render the cart summary
@@ -74,7 +104,7 @@ function updateCartDisplay() {
     let cartSummaryHTML = '';
     cart.forEach((cartItem) => {
       const productId = cartItem.productId;
-      const matchingProduct = products.find(product => String(product.id) === String(productId));
+      const matchingProduct = products.find(product => String(product.id) === String(cartItem.productId));
       if (matchingProduct) {
         cartSummaryHTML += `
           <div class="cart-item-container">
@@ -95,42 +125,20 @@ function updateCartDisplay() {
         `;
       }
     });
-    document.querySelector('.js-order-summary').
-        innerHTML = cartSummaryHTML; 
+    document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 
-        // Select the js-payment-summary container and set its HTML content
-  document.querySelector('.js-payment-summary').innerHTML = `
-<div class="payment-summary">
-  <div class="payment-summary-title">
-    Order Summary
-  </div>
-  <div class="payment-summary-row">
-    <div>Items (x):</div>
-    <div class="payment-summary-money">£0.00</div>
-  </div>
-  <div class="payment-summary-row total-row">
-    <div>Order total:</div>
-    <div class="payment-summary-money">£0.00</div>
-  </div>
-  <button class="place-order-button button-primary">
-    Submit order
-  </button>
-</div>
-`;
+    // Reattach event listeners for delete buttons after updating the HTML
+    document.querySelectorAll('.js-delete-link').forEach((link) => {
+      const productId = link.dataset.productId;
+      console.log("Attach delete listener for Product ID:", productId, "Type:", typeof productId);
 
+      link.addEventListener('click', (event) => {
+        const productIdLink = event.target.dataset.productId;
+        console.log("Clicked Delete on Product ID:", productIdLink, "Type:", typeof productIdLink);  // Log the type
+        removeFromCart(productIdLink);  // Pass the productId to removeFromCart
+        updateCartDisplay();  // Update the cart display after removal
+        generatePaymentSummary();  // Update payment summary after cart change
+      });
+    });
   }
-
-  // Reattach event listeners for delete buttons
-  // Attach event listeners to each delete link
-document.querySelectorAll('.js-delete-link').forEach((link) => {
-  const productId = link.dataset.productId;
-  console.log("Attach delete listener for Product ID:", productId, "Type:", typeof productId);
-
-  link.addEventListener('click', (event) => {
-    const productIdLink = event.target.dataset.productId;
-    console.log("Clicked Delete on Product ID:", productIdLink, "Type:", typeof productIdLink);  // Log the type
-    removeFromCart(productIdLink);  // Pass the productId to removeFromCart
-    updateCartDisplay();  // Update the cart display after removal
-  });
-});
 }

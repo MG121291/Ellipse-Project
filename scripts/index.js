@@ -1,49 +1,67 @@
-/*This page fetches the API and renders the products on the index.html page*/ 
+/* This page fetches the API and renders the products on the index.html page */
 
+import { cart, addToCart } from '/scripts/cart.js'; // Import cart to avoid conflicts.
 
-import {cart, addToCart} from '/scripts/cart.js'; // Import cart to avoid conflicts.
+let products = JSON.parse(localStorage.getItem('products')) || []; // Check if products exist in localStorage.
 
-fetch('https://fakestoreapi.com/products') // Fetch products from API.
+if (products.length === 0) {
+  // If no products in localStorage, fetch them from the API.
+  fetch('https://fakestoreapi.com/products') // Fetch products from API.
     .then(apiData => apiData.json()) // Parse response to JSON.
-    .then(productsArray => { 
-        localStorage.setItem('products', JSON.stringify(productsArray)); 
-        // Save copy of products to localStorage for cart transfer
-        // Data is retrieved in checkout.js to display products in the cart.
+    .then(productsArray => {
+      // Store products in localStorage for future use.
+      localStorage.setItem('products', JSON.stringify(productsArray));
+      products = productsArray;
+      console.log('Products loaded from API:', products);
 
-        const productsContainer = document.querySelector('.js-products-container'); // Targets product container/grid/parent.
-        productsArray.forEach(productObject => {  // Loop through products.
-            const productElement = document.createElement('div'); // creates div for each
-            productElement.classList.add('product'); // Add css class to divs
-
-            productElement.innerHTML = `
-                <img src="${productObject.image}">
-                <p class="product-title">${productObject.title}</p>
-                <p class="product-price">Price: £${(productObject.price).toFixed(2)}</p>
-                <button class="js-add-to-cart-button add-to-cart-button" data-product-id="${productObject.id}">
-                    Add to Cart
-                </button>
-            `; // Add HTML content for each product.
-
-            productsContainer.appendChild(productElement); // renders HTML into parent. 
-
-            function updateCartQuantity() {
-                let cartQuantity = 0;
-                cart.forEach((cartItem) => {
-                    cartQuantity += cartItem.quantity;
-                    document.querySelector('.js-cart-quantity')
-                        .innerHTML = cartQuantity;
-                });
-            } // when ran, updates the cart quantity and displays it on the page
-
-            const addButton = productElement.querySelector('.js-add-to-cart-button'); 
-            addButton.addEventListener('click', () => { // When clicked does following:
-                const productId = addButton.dataset.productId; // gets product ID
-                addToCart(productId); // runs function from cart.js 
-                localStorage.setItem('cart', JSON.stringify(cart)); 
-                // Save cart to localStorage.
-                // Data is used in checkout.js to display cart details and summary.
-                updateCartQuantity(); // Runs function to update cart quantity + display
-            });
-        });
+      // Proceed with your code to render products on the page.
+      renderProducts(products);
     })
     .catch(error => console.error('Error fetching products:', error));
+} else {
+  // If products are already in localStorage, use them directly.
+  console.log('Products loaded from localStorage:', products);
+
+  // Proceed with your code to render products on the page.
+  renderProducts(products);
+}
+
+// Function to render the products
+function renderProducts(productsArray) {
+  const productsContainer = document.querySelector('.js-products-container'); // Targets product container/grid/parent.
+
+  productsArray.forEach(productObject => {
+    const productElement = document.createElement('div'); // Creates div for each product.
+    productElement.classList.add('product'); // Add css class to divs.
+
+    productElement.innerHTML = `
+      <img src="${productObject.image}" alt="${productObject.title}">
+      <p class="product-title">${productObject.title}</p>
+      <p class="product-price">Price: £${(productObject.price).toFixed(2)}</p>
+      <button class="js-add-to-cart-button add-to-cart-button" data-product-id="${productObject.id}">
+        Add to Cart
+      </button>
+    `; // Add HTML content for each product.
+
+    productsContainer.appendChild(productElement); // Renders HTML into parent.
+
+    // Function to update cart quantity on the page.
+    function updateCartQuantity() {
+      let cartQuantity = 0;
+      cart.forEach((cartItem) => {
+        cartQuantity += cartItem.quantity;
+        document.querySelector('.js-cart-quantity')
+          .innerHTML = cartQuantity;
+      });
+    }
+
+    // Add event listener to the add-to-cart button.
+    const addButton = productElement.querySelector('.js-add-to-cart-button');
+    addButton.addEventListener('click', () => {
+      const productId = addButton.dataset.productId; // Gets product ID.
+      addToCart(productId); // Runs function from cart.js to add to cart.
+      localStorage.setItem('cart', JSON.stringify(cart)); // Save updated cart to localStorage.
+      updateCartQuantity(); // Updates cart quantity on the page.
+    });
+  });
+}

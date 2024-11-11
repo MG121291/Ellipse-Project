@@ -69,9 +69,48 @@ export function removeFromCart(productId) {
   return updatedCart;  // Return updated cart
 }
 
-// The submitOrder function for when the submit button is clicked
 function submitOrder() {
-  alert('Order Submitted!');  // Placeholder for the submit order functionality
+  // Fetch the cart from localStorage
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  // Check if the cart is empty
+  if (cart.length === 0) {
+    alert('Your cart is empty. Please add items to your cart before submitting the order.');
+    return;
+  }
+
+  // Prepare the products in the cart to be posted to the API
+  const productsInCart = cart.map(cartItem => ({
+    productId: cartItem.productId,
+    quantity: cartItem.quantity // Use the actual quantity from the cart
+  }));
+
+  // Prepare the order data
+  const orderData = {
+    userId: 8,  // Assuming a static user ID for the sake of this example
+    date: new Date().toISOString().split('T')[0],  // Use the current date in ISO format
+    products: productsInCart
+  };
+
+  // Post the order data to the API
+  fetch('https://fakestoreapi.com/carts', {
+    method: "POST",
+    body: JSON.stringify(orderData),
+    headers: {
+      'Content-Type': 'application/json'  // Ensure the request body is in JSON format
+    }
+  })
+    .then(response => response.json())
+    .then(json => {
+      console.log('Order submitted successfully:', json);
+      alert('Order submitted successfully!');
+      // Optionally clear the cart after successful submission
+      localStorage.removeItem('cart');
+    })
+    .catch(error => {
+      console.error('Error submitting order:', error);
+      alert('There was an error submitting the order.');
+    });
 }
 
 waitForCartToLoad();
