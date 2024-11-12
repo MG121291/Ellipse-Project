@@ -164,15 +164,54 @@ Come back with supplies.`);
 
 // --------------------------- declare deleteFromCart function ----------------------------------- //
 export function deleteFromCart(productId) {
-  let cart = getFromStorage () || [];  
-  const updatedCart = cart.filter(item => {
-    return item.productId !== Number(productId);  
-  });
-  localStorage.setItem('cart', JSON.stringify(updatedCart));  
+  cart = getFromStorage() || [];  
+  cart = cart.filter(item => item.productId !== Number(productId));  // Assign updatedCart back to cart
+  saveToStorage();
 }
 // <------------- Removes a product from the cart by comparing productId ---------------> //
-// <------- uses .filter method to make a new list/ of items don't match the productId trying to move ---------> //
-// <------------ stores thew new list (updatedCart) of items to local storage  ---------> //
+// <------- uses .filter method to make a new list of items that don’t match the productId to remove --------> //
+// <------------ stores the new list (updatedCart) of items to local storage ---------> //
+
+
+
+
+
+
+
+
+
+// --------------------------- declare adjustCartMinusOne function ----------------------------------- //
+export function adjustCartMinusOne(productId) {
+   cart = getFromStorage() || [];  
+  const item = cart.find(item => item.productId === Number(productId));
+  if (item && item.quantity > 1) {
+    item.quantity -= 1;
+    console.log('minus');
+  }
+ saveToStorage();
+}
+// <------------- .find () method goes through cart, compares products IDs---------------> //
+// <------------- if Ids match check if quantity is greater than 1 then remove 1 quantity ---------------> //
+
+
+
+
+
+// --------------------------- declare adjustCartMinusOne function ----------------------------------- //
+export function adjustCartAddOne(productId) {
+   cart = getFromStorage() || [];  
+  const item = cart.find(item => item.productId === Number(productId));
+  if (item && item.quantity >= 0) {
+    item.quantity += 1;
+    console.log('add');
+  }
+
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+// <------------- .find () method goes through cart, compares products IDs---------------> //
+// <------------- if Ids match check if quantity is greater than or equal to 0, then add 1---------------> //
+
+
 
 
 waitForCartToLoad();  // Wait for cart to load and set up event listeners when the DOM is ready

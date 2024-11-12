@@ -1,4 +1,5 @@
-import { deleteFromCart} from "./cart.js"; 
+import { addToCart, deleteFromCart, adjustCartAddOne, adjustCartMinusOne } from "./cart.js"; 
+
 
 
 // Load the cart and products from localStorage
@@ -42,8 +43,8 @@ function updateCartDisplay() {
                 <div class="product-price">£${(matchingProduct.price).toFixed(2)}</div>
                 <div class="product-quantity">
                   Quantity: <span class="quantity-label">${cartItem.quantity}</span>
-                  <button class="minus-1-quantity link-primary">-</button>
-                  <button class="add-1-quantity link-primary">+</button>
+                  <button class="minus-1-quantity link-primary js-minus-1-button" data-product-id="${matchingProduct.id}">-</button>
+                  <button class="add-1-quantity link-primary js-add-1-button" data-product-id="${matchingProduct.id}">+</button>
                   <p class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">Delete</p>
                 </div>
               </div>
@@ -61,6 +62,22 @@ function updateCartDisplay() {
       link.addEventListener('click', (event) => {
         const productId = event.target.dataset.productId;
         deleteFromCart(productId);  // Call deleteFromCart with the productId
+        updateCartDisplay();  // Update the cart display after removal
+        generatePaymentSummary();  // Update payment summary after cart change
+      });
+    });
+    document.querySelectorAll('.js-minus-1-button').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        const productId = event.target.dataset.productId;
+        adjustCartMinusOne(productId);  
+        updateCartDisplay();  // Update the cart display after removal
+        generatePaymentSummary();  // Update payment summary after cart change
+      });
+    });
+    document.querySelectorAll('.js-add-1-button').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        const productId = event.target.dataset.productId;
+        adjustCartAddOne(productId); 
         updateCartDisplay();  // Update the cart display after removal
         generatePaymentSummary();  // Update payment summary after cart change
       });
