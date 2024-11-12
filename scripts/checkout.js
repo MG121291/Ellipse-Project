@@ -1,4 +1,4 @@
-import { addToCart, deleteFromCart, adjustCartAddOne, adjustCartMinusOne } from "./cart.js"; 
+import { deleteFromCart, adjustCartAddOne, adjustCartMinusOne } from "./cart.js"; 
 
 
 
@@ -16,14 +16,15 @@ if (cart.length === 0) {
 }
 
 // Function to update the cart display after an item is removed
-function updateCartDisplay() {
+export function updateCartDisplay() {
   // Re-fetch the cart from localStorage after removal and re-render
   cart = JSON.parse(localStorage.getItem('cart')) || [];
   
   let cartSummaryHTML = '';  // Initialize the variable to hold the HTML for the cart summary
 
   if (cart.length === 0) {
-    document.querySelector('.js-order-summary').innerHTML = '<p>Houston, we have a problem...the cargo hold is empty.</p>';
+    document.querySelector('.js-order-summary')
+      .innerHTML = '<p>Houston, we have a problem...the cargo hold is empty.</p>';
   } else {
     const today = new Date();
     const deliveryDay = new Date(today.setDate(today.getDate() + 3));
@@ -86,7 +87,7 @@ function updateCartDisplay() {
 }
 
 // Function to generate the payment summary
-function generatePaymentSummary() {
+export function generatePaymentSummary() {
   // Calculate the total quantity of items in the cart
   const totalQuantity = cart.reduce((total, cartItem) => total + cartItem.quantity, 0);
 
@@ -107,13 +108,15 @@ function generatePaymentSummary() {
       <div>Order total:</div>
       <div class="payment-summary-money">£${totalAmount.toFixed(2)}</div>
     </div>
-    <button class="submit-order-button button-primary js-submit-order-button">
+      <button class="submit-order-button button-primary js-submit-order-button">
       Submit order
     </button>
   `;
   
-  document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
-}
+  document.querySelector('.js-payment-summary')
+    .innerHTML = paymentSummaryHTML;
+};
+
 
 // Initial call to display cart and payment summary
 updateCartDisplay();

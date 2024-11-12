@@ -19,6 +19,11 @@
   font-size: 22px;
   margin-bottom: 18px;
 }
+.page-subtitle {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 18px;
+}
 
 .checkout-grid {
   display: grid;
@@ -32,41 +37,6 @@
   align-items: start;
 }
 
-@media (max-width: 1000px) {
-  .main {
-    max-width: 500px;
-  }
-
-  .checkout-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.cart-item-container,
-.payment-summary {
-  border: 1px solid rgb(222, 222, 222);
-  border-radius: 4px;
-  padding: 18px;
-}
-
-.cart-item-container {
-  margin-bottom: 12px;
-}
-
-.payment-summary {
-  padding-bottom: 5px;
-}
-
-@media (max-width: 1000px) {
-  .payment-summary {
-    /* grid-row: 1 means this element will be placed into row
-      1 in the grid. (Normally, the row that an element is
-      placed in is determined by the order of the elements in
-      the HTML. grid-row overrides this default ordering). */
-    grid-row: 1;
-    margin-bottom: 12px;
-  }
-}
 
 .delivery-date {
   color: rgb(0, 118, 0);
@@ -102,24 +72,25 @@
   margin-left: 20px; /* Add spacing between details and options */
 }
 
-@media (max-width: 1000px) {
-  .cart-item-details-grid {
-    flex-direction: column; /* Stack items vertically on smaller screens */
-  }
 
-  .delivery-options {
-    margin-left: 0; /* Remove left margin for mobile view */
-  }
+.cart-item-container,
+.payment-summary {
+  border: 1px solid rgb(222, 222, 222);
+  border-radius: 4px;
+  padding: 18px;
+}
+
+.cart-item-container {
+  margin-bottom: 12px;
+}
+
+.payment-summary {
+  padding-bottom: 5px;
 }
 
 .product-image {
   max-width: 100%;
   max-height: 120px;
-
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
   margin-left: auto;
   margin-right: auto;
 }
@@ -135,14 +106,14 @@
   margin-bottom: 5px;
 }
 
-/* Apply common hyperlink styling to both links */
+
 .link-primary {
   color: blue;
-  cursor: pointer;          /* Makes it look clickable */
+  cursor: pointer;          
 }
 
 .link-primary:hover {
-  color: darkblue;          /* Optional: Change color on hover */
+  color: darkblue;     
 }
 
 .product-quantity .link-primary {
@@ -157,24 +128,6 @@
   background-color: transparent;
   border: none;
 }
-
-
-@media (max-width: 1000px) {
-  .delivery-options {
-    /* grid-column: 1 means this element will be placed
-       in column 1 in the grid. (Normally, the column that
-       an element is placed in is determined by the order
-       of the elements in the HTML. grid-column overrides
-       this default ordering).
-       
-       / span 2 means this element will take up 2 columns
-       in the grid (Normally, each element takes up 1
-       column in the grid). */
-    grid-column: 1 / span 2;
-  }
-}
-
-
 
 .delivery-option {
   display: grid;
@@ -248,4 +201,14 @@
   font-size: 16px;
   cursor: pointer;
   border: none;
+}
+
+.rocketship {
+  height: 150px;
+  margin-top: 20px;
+  margin-left: 100px;
+}
+
+.confirmed-response {
+  font-size: 14px;
 }

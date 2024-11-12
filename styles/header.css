@@ -13,11 +13,10 @@ a {
   height: 80px;
   background-color: #210535;
   z-index: 100; 
-  cursor: pointer;
 }
 
 
-/*left section below*/
+/* ------ left ------ */
 .left-section {
   display: flex;
   flex-direction: row;
@@ -34,6 +33,7 @@ a {
   font-family: 'Neon Future 2.0 Demo';  /*downloaded font, single quotes required to use spaces*/
   font-size: 20px;
   width: 50%;
+  display: flex;
 }
 .brand-slogan {
   font-size: 14px;
@@ -42,7 +42,7 @@ a {
   padding-top: 25px;
 }
 
-/*middle section below*/
+/* ------ middle ------ */
 .middle-section {
   display: flex;
   flex: 1;
@@ -81,7 +81,7 @@ a {
 }
 
 
-/*right section below*/
+/* ------ right ------ */
 .right-section {
   display: flex;
   flex: .5;
@@ -93,6 +93,9 @@ a {
 .icon-text-container {
   display: flex;
   align-items: center;
+  margin-right: 10px;
+  margin-left: 10px;
+  cursor: pointer;
 }
 .header-icons {
   position: relative; /*relative for absolute counter overlay */

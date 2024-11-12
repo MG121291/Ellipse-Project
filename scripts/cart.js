@@ -47,6 +47,7 @@ export function addToCart(productId) {
 // --------------------------- declare saveToStorage function ----------------------------------- //
 export function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));  
+  cart = getFromStorage();  // Refresh the cart variable with latest data from storage
 }
 // <------------- Saves cart data to localStorage as a string to hold cart content across pages ---------------> //
 
@@ -75,6 +76,18 @@ export function goToCheckout(event) {
 
 
 
+// --------------------------- declare goToConfirmation function ----------------------------------- //
+export function goToConfirmation(event) {
+  event.preventDefault();  
+  saveToStorage();
+  window.location.href = 'confirmation.html'; 
+}
+// <------------ same  --------------> //
+
+
+
+
+
 
 
 
@@ -88,10 +101,10 @@ export function waitForCartToLoad() {
       cartIcon.addEventListener('click', goToCheckout);  
     }
     
-    const submitOrderButton = document.querySelector('.js-submit-order-button');  
-    if (submitOrderButton) {
-      submitOrderButton.addEventListener('click', submitOrder);  
-    }
+    const submitOrderButton = document.querySelector('.js-submit-order-button');
+if (submitOrderButton) {
+  submitOrderButton.addEventListener('click', submitOrder);
+} return;
   });
 }
 // <------ Adds event listener to wait for  DOM to load because generating so much html on checkout page -------> //
@@ -112,44 +125,65 @@ export function waitForCartToLoad() {
 
 // --------------------------- declare submitOrder function ----------------------------------- //
 function submitOrder() {
+  console.log("submitOrder function called");
 
-  const cart = getFromStorage () || [];
+  cart = getFromStorage() || [];
+  saveToStorage();
 
   if (cart.length === 0) {
-    alert(`It's dangerous to go alone! 
-
-Come back with supplies.`);
+    alert("It's dangerous to go alone! \n\nCome back with supplies.");
     return;
   }
+
   const productsInCart = cart.map(cartItem => ({
     productId: cartItem.productId,
     quantity: cartItem.quantity 
   }));
-  // Post the order data to the API
+
   fetch('https://fakestoreapi.com/carts', {
     method: "POST",
-    body: JSON.stringify(
-      {
-        userId: 8, 
-        date: new Date().toISOString(), //reformats date+time to YYYY-MM-DDT00:00:00
-        products: productsInCart
-      }
-    ),
+    body: JSON.stringify({
+      userId: 8,
+      date: new Date().toISOString(),
+      products: productsInCart
+    }),
     headers: {
-      'Content-Type': 'application/json' // send string data with a tag to tell API to parse to JSON
+      'Content-Type': 'application/json'
     }
   })
     .then(response => response.json())
     .then(json => {
       console.log('Order submitted successfully:', json);
-      alert('Order submitted successfully!');
-  
+
+      document.querySelector('.js-order-summary').innerHTML = `
+        <img class="rocketship" src="logo/rocketship2.jpg">
+        <span class="page-subtitle">Blast off!</span>
+      `;
+      
+      document.querySelector('.js-payment-summary').innerHTML = `
+        <p class="delivery-date">Your order has been confirmed.</p>
+        <p class="confirmed-response total-row">We'll be with you in less than 12 Parsecs!</p>
+       
+        
+          <p class="confirmed-response row-decoration">Order Id: ${json.id}</p>
+          <p class="confirmed-response">Placed by User Id: ${json.userId}</p>
+          <p class="confirmed-response">Date of order: ${json.date}</p>
+          <div class="confirmed-response">Details of order: </div>
+          <div class="confirmed-response"> ${
+            json.products
+              .map(product => `Product ID: ${product.productId}, Quantity: ${product.quantity}`)
+              .join('<br>')
+          }</div>
+      
+      `;
       localStorage.removeItem('cart');
+      cart.length = 0;
     })
 }
+
+
 // <---------------- If the cart is empty then alert with pop up and do not run any code -----------------> //
 // <----------- the .map() method makes a duplicate, more condensed version of the local cart. Containing only properties that the API can read. Think of you scanning your physcial basket through a self service checkout.  ---------------> 
-
 // <------------- We the make POST request to API to create a new cart ---------------> //
 // <--------- We get a response from the API documented for now in console logs, will update to order confirmation page ------------> //
 
@@ -182,34 +216,35 @@ export function deleteFromCart(productId) {
 
 // --------------------------- declare adjustCartMinusOne function ----------------------------------- //
 export function adjustCartMinusOne(productId) {
-   cart = getFromStorage() || [];  
+  cart = getFromStorage() || [];
   const item = cart.find(item => item.productId === Number(productId));
   if (item && item.quantity > 1) {
     item.quantity -= 1;
-    console.log('minus');
   }
- saveToStorage();
+  saveToStorage();
+  console.log("Cart after removing one item:", JSON.parse(localStorage.getItem('cart')));
 }
-// <------------- .find () method goes through cart, compares products IDs---------------> //
-// <------------- if Ids match check if quantity is greater than 1 then remove 1 quantity ---------------> //
+// <------------- .find () method goes through cart, compares product IDs---------------> //
+// <------------- if IDs match, check if quantity is greater than 1, then remove 1 quantity ---------------> //
 
 
 
 
 
-// --------------------------- declare adjustCartMinusOne function ----------------------------------- //
+
+
+
+// --------------------------- declare adjustCartAddOne function ----------------------------------- //
 export function adjustCartAddOne(productId) {
-   cart = getFromStorage() || [];  
+  cart = getFromStorage() || [];
   const item = cart.find(item => item.productId === Number(productId));
   if (item && item.quantity >= 0) {
     item.quantity += 1;
-    console.log('add');
   }
-
-  localStorage.setItem('cart', JSON.stringify(cart));
+  saveToStorage();
+  console.log("Cart after adding one item:", JSON.parse(localStorage.getItem('cart')));
 }
-// <------------- .find () method goes through cart, compares products IDs---------------> //
-// <------------- if Ids match check if quantity is greater than or equal to 0, then add 1---------------> //
+
 
 
 
