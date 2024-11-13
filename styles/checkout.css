@@ -2,14 +2,8 @@
   max-width: 1100px;
   padding-left: 30px;
   padding-right: 30px;
-
   margin-top: 140px;
   margin-bottom: 100px;
-
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
   margin-left: auto;
   margin-right: auto;
 }
@@ -28,13 +22,8 @@
 
 .checkout-grid {
   display: grid;
-  /* Here, 1fr means the first column will take
-     up the remaining space in the grid. */
   grid-template-columns: 1fr 350px;
   column-gap: 12px;
-
-  /* Use align-items: start; to prevent the elements
-     in the grid from stretching vertically. */
   align-items: start;
 }
 
@@ -49,18 +38,18 @@
 
 .cart-item-details-grid {
   display: grid;
-  grid-template-columns: 100px 1fr auto;  /* Adds a third column for delivery options */
+  grid-template-columns: 100px 1fr auto; 
   gap: 25px;
   align-items: start;
 }
 
 .cart-item-details {
-  flex: 2;  /* Take up more space on the left */
+  flex: 2;  
 }
 
 .delivery-options-container {
   display: flex;
-  flex-direction: column;  /* Stack the title above the radio options */
+  flex-direction: column; 
   align-items: flex-start;
 }
 .delivery-options-title {
@@ -68,9 +57,9 @@
   margin-bottom: 10px;
 }
 .delivery-options {
-  flex: 1;  /* Take up less space on the right */
-  max-width: 250px;  /* Optional: Limit width */
-  margin-left: 20px; /* Add spacing between details and options */
+  flex: 1;  
+  max-width: 250px;  
+  margin-left: 20px; 
 }
 
 
@@ -161,9 +150,6 @@
 
 .payment-summary-row {
   display: grid;
-  /* 1fr auto; means the width of the 2nd column will be
-     determined by the elements inside the column (auto).
-     The 1st column will take up the remaining space. */
   grid-template-columns: 1fr auto;
 
   font-size: 15px;

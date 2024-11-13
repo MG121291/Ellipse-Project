@@ -24,11 +24,11 @@ a {
   align-items: center;
   color: white;
   height: 100%;
-  gap: 10px; /* Adds consistent spacing between elements */
+  gap: 10px; 
 }
 
 .brand-logo {
-  height: 100%; /* Adjust based on desired logo size */
+  height: 100%; 
   margin-left: 5px;
 }
 
@@ -36,14 +36,14 @@ a {
   font-family: 'Neon Future 2.0 Demo';
   font-size: 20px;
   display: flex;
-  align-items: center; /* Center text vertically next to the logo */
+  align-items: center; 
   margin-left: 5px;
 }
 
 .brand-slogan {
   font-size: 14px;
   font-style: italic;
-  line-height: 1.5; /* Adjusts line spacing for better readability */
+  line-height: 1.5; 
   margin-left: 10px;
   margin-top: 20px;
 }
@@ -104,7 +104,7 @@ a {
   cursor: pointer;
 }
 .header-icons {
-  position: relative; /*relative for absolute counter overlay */
+  position: relative; 
   font-size: 28px;
   margin-right: 6px;
 }
