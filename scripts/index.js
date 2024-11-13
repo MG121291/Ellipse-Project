@@ -5,7 +5,7 @@ import { cart, addToCart, saveToStorage } from '/scripts/cart.js';
 let products = JSON.parse(localStorage.getItem('products')) || []; 
 
 if (products.length === 0) {
-  fetch('https://fakestoreapi.com/products') 
+  fetch('https://cors-anywhere.herokuapp.com/https://fakestoreapi.com/products')
     .then(apiData => apiData.json()) 
     .then(productsArray => {
       localStorage.setItem('products', JSON.stringify(productsArray));
