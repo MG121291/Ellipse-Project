@@ -3,7 +3,7 @@ function getCart() {
   fetch('https://fakestoreapi.com/carts/1')
     .then(apiCart => apiCart.json())
     .then(cartObject => {
-      const cartContainer = document.querySelector('.js-update-cart');
+      const cartContainer = document.querySelector('.js-current-cart');
       
       // Clear the container to avoid duplicate content
       cartContainer.innerHTML = '';
@@ -12,22 +12,33 @@ function getCart() {
       const cartElement = document.createElement('div');
       cartElement.classList.add('cart');
 
-      cartElement.innerHTML = `
-        <p class="cart-id">Order Id: ${cartObject.id}</p>
-        <p class="cart-user-id">Placed by User Id: ${cartObject.userId}</p>
-        <p class="cart-date">Date of order: ${cartObject.date}</p>
-        <div class="cart-products">Details of order: ${JSON.stringify(cartObject.products)}</div>
+      // Create the list to display cart information
+      const cartList = document.createElement('ul');
+      cartList.classList.add('cart-list');
+
+      cartList.innerHTML = `
+        <h4>Current invoice:</h4>
+        <ul>
+        <li class="cart-id">Order Id: ${cartObject.id}</li>
+        <li class="cart-user-id">Placed by User Id: ${cartObject.userId}</li>
+        <li class="cart-date">Date of order: ${cartObject.date}</li>
+        <li class="cart-products">Details of order:</li>
+        
+          ${cartObject.products.map(product => 
+            `<li>Product ID: ${product.productId}, Quantity: ${product.quantity}</li>`
+          ).join('')}
+        </ul>
       `;
 
+      cartElement.appendChild(cartList);
       cartContainer.appendChild(cartElement);
-    })
-    .catch(error => {
-      console.error("Error fetching cart data:", error);
     });
 }
 
 // Function to update the cart data and refresh the displayed cart
 function updateCart() {
+  const dateNow = new Date();
+
   // Send PATCH request to update the existing cart data
   fetch('https://fakestoreapi.com/carts/1', {
     method: "PATCH",
@@ -35,39 +46,40 @@ function updateCart() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      userId: 3,
-      date: '2019-12-10',
-      products: [{ productId: 1, quantity: 900000 }]
+      userId: 1,
+      date: dateNow,
+      products: [
+        { productId: 1, quantity: 9 },
+        { productId: 2, quantity: 3 },
+        { productId: 3, quantity: 1 }
+      ]
     })
   })
     .then(res => res.json())
     .then(updatedCart => {
-      console.log("Updated cart:", updatedCart); // Log the updated cart to confirm
-
       // Now update the UI with the updated data directly from the response
-      const cartContainer = document.querySelector('.js-update-cart');
-      cartContainer.innerHTML = '';
+      const newCartContainer = document.querySelector('.js-current-cart');
+      newCartContainer.innerHTML = '';
 
       // Create and append new cart HTML based on the updated data
-      const cartElement = document.createElement('div');
-      cartElement.classList.add('cart');
+      const newCartElement = document.createElement('div');
+      newCartElement.classList.add('cart');
 
-      cartElement.innerHTML = `
-        <p class="cart-id">Order Id: ${updatedCart.id}</p>
-        <p class="cart-user-id">Placed by User Id: ${updatedCart.userId}</p>
-        <p class="cart-date">Date of order: ${updatedCart.date}</p>
-        <div class="cart-products">Details of order: ${JSON.stringify(updatedCart.products)}</div>
+      newCartElement.innerHTML = `
+        <h4>New invoice:</h4>
+          <ul>
+        <li class="cart-id">Order Id: ${updatedCart.id}</li>
+        <li class="cart-user-id">Placed by User Id: ${updatedCart.userId}</li>
+        <li class="cart-date">Date of order: ${updatedCart.date}</li>
+          ${updatedCart.products.map(product => 
+            `<li>Product ID: ${product.productId}, Quantity: ${product.quantity}</li>`
+          ).join('')}
+        </ul>
       `;
 
-      cartContainer.appendChild(cartElement);
+      newCartContainer.appendChild(newCartElement);
     })
-    .catch(error => {
-      console.error("Error updating cart data:", error);
-    });
 }
-
-function newCart() {
-  };
 
 // Initial fetch of the cart data when the page loads
 getCart();

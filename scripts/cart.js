@@ -125,7 +125,6 @@ if (submitOrderButton) {
 
 // --------------------------- declare submitOrder function ----------------------------------- //
 function submitOrder() {
-  console.log("submitOrder function called");
 
   cart = getFromStorage() || [];
   saveToStorage();
@@ -159,12 +158,9 @@ function submitOrder() {
         <img class="rocketship" src="logo/rocketship2.jpg">
         <span class="page-subtitle">Blast off!</span>
       `;
-      
       document.querySelector('.js-payment-summary').innerHTML = `
         <p class="delivery-date">Your order has been confirmed.</p>
         <p class="confirmed-response total-row">We'll be with you in less than 12 Parsecs!</p>
-       
-        
           <p class="confirmed-response row-decoration">Order Id: ${json.id}</p>
           <p class="confirmed-response">Placed by User Id: ${json.userId}</p>
           <p class="confirmed-response">Date of order: ${json.date}</p>

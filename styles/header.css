@@ -1,6 +1,8 @@
 a {
   text-decoration: none;
   color: inherit; 
+  display: inline-flex;
+  padding-left: 10px;
 }
 
 .header {
@@ -19,27 +21,31 @@ a {
 /* ------ left ------ */
 .left-section {
   display: flex;
-  flex-direction: row;
-  flex: .7; 
   align-items: center;
-  justify-content: center;
   color: white;
-}
-.brand-logo {
   height: 100%;
+  gap: 10px; /* Adds consistent spacing between elements */
+}
+
+.brand-logo {
+  height: 100%; /* Adjust based on desired logo size */
   margin-left: 5px;
 }
+
 .brand-name {
-  font-family: 'Neon Future 2.0 Demo';  /*downloaded font, single quotes required to use spaces*/
+  font-family: 'Neon Future 2.0 Demo';
   font-size: 20px;
-  width: 50%;
   display: flex;
+  align-items: center; /* Center text vertically next to the logo */
+  margin-left: 5px;
 }
+
 .brand-slogan {
   font-size: 14px;
   font-style: italic;
-  width: 50%;
-  padding-top: 25px;
+  line-height: 1.5; /* Adjusts line spacing for better readability */
+  margin-left: 10px;
+  margin-top: 20px;
 }
 
 /* ------ middle ------ */

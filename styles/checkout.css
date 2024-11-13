@@ -23,6 +23,7 @@
   font-weight: 700;
   font-size: 18px;
   margin-bottom: 18px;
+  color:  #5c3c74;
 }
 
 .checkout-grid {
@@ -39,7 +40,7 @@
 
 
 .delivery-date {
-  color: rgb(0, 118, 0);
+  color: #007600;
   font-weight: 700;
   font-size: 19px;
   margin-top: 5px;
@@ -101,7 +102,7 @@
 }
 
 .product-price {
-  color: rgb(177, 39, 4);
+  color: #B12704;
   font-weight: 700;
   margin-bottom: 5px;
 }
@@ -142,7 +143,7 @@
 }
 
 .delivery-option-date {
-  color: rgb(0, 118, 0);
+  color: #007600;
   font-weight: 500;
   margin-bottom: 3px;
 }
@@ -182,7 +183,7 @@
 }
 
 .total-row {
-  color: rgb(177, 39, 4);
+  color: #B12704;
   font-weight: 700;
   font-size: 18px;
 
@@ -205,7 +206,7 @@
 
 .rocketship {
   height: 150px;
-  margin-top: 20px;
+  margin-top: 50px;
   margin-left: 100px;
 }
 
