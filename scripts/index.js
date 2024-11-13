@@ -1,9 +1,6 @@
 import { cart, addToCart, saveToStorage } from '/scripts/cart.js'; 
 // <------- importing functions to keep files modular --------> //
 
-
-
-
 // -------------------------on initialize---------------------------------------//
 let products = JSON.parse(localStorage.getItem('products')) || []; 
 
@@ -21,9 +18,6 @@ if (products.length === 0) {
 // <----------- if products array is empty then fetch products from API -------------------> //
 // <------ parse string response to JSON productsArray, assign to products variable ----> //
 // <----------run function to display the contents of products on screen ----------------> //
-
-
-
 
 
 
@@ -52,13 +46,14 @@ function displayProductsFromAPI() {
   });
 }
 
+
+
 // <--------------------- Target js-products-container HTML element and assign to variable  ---------------------> //
 // <---------- For Loop through PRODUCTS array. Creates a div for each object. Assigned to variable ----------> //
 // <------------- Div variabe targeted in DOM to generates additional html with Object properties ------------> //
 // <-------------- Div variable and its content pushed to the parent Container via .appendChild --------------> //
 // <------------------- Target generated js-add-to-cart-button save as addButton variable  -------------------> //
 // <------- Runs the addButtonListener function, targets individual AddButtons via productObject.id (addedProductId) -------> //
-
 
 
 
@@ -103,3 +98,6 @@ function updateCartQuantity() {
 // <------- For loops through each item in cart array and checks how many of that item there is--------> //
 // <--------- Adds the total number of each item together and adds to cartQantity variable -----------> //
 // <------- targets DOM for js-cart-quantity and updates content to dispay total cartQuantity--------> //
+
+
+
